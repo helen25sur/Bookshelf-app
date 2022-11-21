@@ -1,5 +1,13 @@
-import { createRouter, createWebHashHistory } from 'vue-router';
-import HomeView from '../views/HomeView.vue';
+import { createRouter, createWebHistory } from 'vue-router';
+
+import BooksListVue from '@/components/BooksList.vue';
+import WishListBooksVue from '@/components/WishListBooks.vue';
+import ReadBooksVue from '@/components/ReadBooks.vue';
+import UserProfileVue from '@/components/UserProfile.vue';
+import LogInVue from '@/components/LogIn.vue';
+import SignInVue from '@/components/SignIn.vue';
+
+import HomeView from '../views/home.vue';
 
 const routes = [
   {
@@ -8,17 +16,39 @@ const routes = [
     component: HomeView,
   },
   {
-    path: '/about',
-    name: 'about',
-    // route level code-splitting
-    // this generates a separate chunk (about.[hash].js) for this route
-    // which is lazy-loaded when the route is visited.
-    component: () => import(/* webpackChunkName: "about" */ '../views/AboutView.vue'),
+    path: '/books',
+    name: 'books',
+    component: BooksListVue,
+  },
+  {
+    path: '/wishlist',
+    name: 'wishlist',
+    component: WishListBooksVue,
+  },
+  {
+    path: '/read',
+    name: 'read',
+    component: ReadBooksVue,
+  },
+  {
+    path: '/profile',
+    name: 'profile',
+    component: UserProfileVue,
+  },
+  {
+    path: '/login',
+    name: 'login',
+    component: LogInVue,
+  },
+  {
+    path: '/signin',
+    name: 'signin',
+    component: SignInVue,
   },
 ];
 
 const router = createRouter({
-  history: createWebHashHistory(),
+  history: createWebHistory(),
   routes,
 });
 

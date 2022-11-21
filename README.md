@@ -1,4 +1,11 @@
-# ichlernedeutsch
+# my-bookshelf
+
+## Teqnologies
+  * Vue.js
+  * Vue router
+  * Vuex
+  * Vuetify
+  * Firebase
 
 ## Project setup
 ```
