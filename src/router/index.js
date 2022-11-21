@@ -1,11 +1,11 @@
 import { createRouter, createWebHistory } from 'vue-router';
 
-import BooksListVue from '@/components/BooksList.vue';
-import WishListBooksVue from '@/components/WishListBooks.vue';
-import ReadBooksVue from '@/components/ReadBooks.vue';
-import UserProfileVue from '@/components/UserProfile.vue';
-import LogInVue from '@/components/LogIn.vue';
-import SignInVue from '@/components/SignIn.vue';
+import BooksListVue from '@/views/BooksList.vue';
+import WishListBooksVue from '@/views/WishListBooks.vue';
+import ReadBooksVue from '@/views/ReadBooks.vue';
+import UserProfileVue from '@/views/UserProfile.vue';
+import LogInVue from '@/views/LogIn.vue';
+import SignInVue from '@/views/SignIn.vue';
 
 import HomeView from '../views/home.vue';
 

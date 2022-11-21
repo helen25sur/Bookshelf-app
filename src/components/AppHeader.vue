@@ -1,13 +1,12 @@
 <template>
 <div>
-  <v-toolbar app class="primary">
-    <v-app-bar>
+    <v-app-bar class="primary">
       <v-app-bar-nav-icon
         class="hidden-md-and-up"
         variant="text" @click.stop="drawer = !drawer">
       </v-app-bar-nav-icon>
-      <router-link to="/" style="color: inherit">
-        <v-toolbar-title v-text="title"></v-toolbar-title>
+      <router-link to="/" class="mx-4" style="color: inherit">
+        <v-toolbar-title>{{title}}</v-toolbar-title>
       </router-link>
       <v-spacer></v-spacer>
       <v-toolbar-items class="hidden-sm-and-down">
@@ -16,7 +15,6 @@
           :key="`menu-${i}`" :to="route" :prepend-icon="icon">
           {{ title }}</v-btn>
       </v-toolbar-items>
-    </v-app-bar>
     <v-navigation-drawer class="hidden-md-and-up" temporary v-model="drawer">
       <v-list
         v-for="({ icon, route, title }, i) in buttons"
@@ -26,7 +24,7 @@
         </v-list-item>
       </v-list>
     </v-navigation-drawer>
-  </v-toolbar>
+  </v-app-bar>
 </div>
 </template>
 
@@ -41,16 +39,25 @@ export default {
     return {
       title: 'My Bookshelf',
       drawer: false,
-      buttons: [
+    };
+  },
+  computed: {
+    isUserAuthenticated() {
+      return this.$store.getters.getIsUserAuthenticated;
+    },
+    buttons() {
+      return this.isUserAuthenticated ? [
         { icon: 'mdi-bookshelf', title: 'Books', route: '/books' },
         { icon: 'mdi-list-box', title: 'Wishlist', route: '/wishlist' },
         { icon: 'mdi-book-variant', title: 'Read Books', route: '/read' },
         { icon: 'mdi-account-box', title: 'Profile', route: '/profile' },
-        { icon: 'mdi-login-variant', title: 'Log In', route: '/login' },
         { icon: 'mdi-logout-variant', title: 'Log Out', route: '/logout' },
+      ] : [
+        { icon: 'mdi-bookshelf', title: 'Books', route: '/books' },
+        { icon: 'mdi-login-variant', title: 'Log In', route: '/login' },
         { icon: 'mdi-login', title: 'Sign In', route: '/signin' },
-      ],
-    };
+      ];
+    },
   },
 };
 
