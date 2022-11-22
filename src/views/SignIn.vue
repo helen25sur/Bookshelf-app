@@ -3,6 +3,9 @@
     class="mx-auto"
     max-width="500"
   >
+  <v-form
+    v-model="valid"
+    @submit.prevent="signin">
     <v-container>
       <v-card-title
         class="text-h5 font-weight-bold d-flex justify-center">
@@ -14,6 +17,7 @@
         name="email"
         variant="underlined"
         prepend-inner-icon="mdi-account-outline"
+        :rules="[rules.required, rules.emailRule]"
       ></v-text-field>
         <span class="text-caption text-grey-darken-1">
             This is the email you will use to login to your account
@@ -74,12 +78,14 @@
       <v-spacer></v-spacer>
 
       <v-btn color="success"
-        @click.prevent="signin"
-        :disabled="processing">
+        @click="signin"
+        :disabled="processing || !valid"
+        type="submit">
         Complete Registration
         <v-icon icon="mdi-chevron-right" end></v-icon>
       </v-btn>
     </v-card-actions>
+  </v-form>
   </v-card>
 </template>
 <script>
@@ -91,9 +97,11 @@ export default {
       terms: false,
       show1: true,
       show2: true,
+      valid: false,
       rules: {
-        required: (value) => !!value || 'Required.',
-        min: (v) => v.length >= 7 || 'Min 7 characters',
+        required: (value) => !!value || 'Required field',
+        min: (v) => v.length >= 7 || 'Minimum 7 characters',
+        emailRule: (v) => /^([a-z0-9_-]+\.)*[a-z0-9_-]+@[a-z0-9_-]+(\.[a-z0-9_-]+)*\.[a-z]{2,6}$/.test(v) || 'Incorrect email',
       },
     };
   },

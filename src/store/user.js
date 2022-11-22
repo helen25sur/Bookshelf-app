@@ -1,4 +1,9 @@
-import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword } from 'firebase/auth';
+import {
+  getAuth,
+  createUserWithEmailAndPassword,
+  signInWithEmailAndPassword,
+  signOut,
+} from 'firebase/auth';
 
 export default {
   state: {
@@ -22,10 +27,10 @@ export default {
   actions: {
     SIGNIN({ commit }, payload) {
       commit('SET_PROCESSING', true);
+      commit('CLEAR_ERROR');
       const auth = getAuth();
       createUserWithEmailAndPassword(auth, payload.email, payload.password)
-        .then(({ user }) => {
-          commit('SET_USER', user.uid);
+        .then(() => {
           commit('SET_PROCESSING', false);
         })
         .catch(({ message }) => {
@@ -35,16 +40,20 @@ export default {
     },
     LOGIN({ commit }, payload) {
       commit('SET_PROCESSING', true);
+      commit('CLEAR_ERROR');
       const auth = getAuth();
       signInWithEmailAndPassword(auth, payload.email, payload.password)
-        .then(({ user }) => {
-          commit('SET_USER', user.uid);
+        .then(() => {
           commit('SET_PROCESSING', false);
         })
         .catch(({ message }) => {
           commit('SET_PROCESSING', false);
           commit('SET_ERROR', message);
         });
+    },
+    LOGOUT() {
+      const auth = getAuth();
+      signOut(auth);
     },
     CHANGE_STAGE({ commit }, payload) {
       if (payload) {

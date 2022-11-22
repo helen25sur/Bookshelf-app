@@ -1,5 +1,7 @@
 import { createRouter, createWebHistory } from 'vue-router';
 
+import Store from '@/store';
+
 import BooksListVue from '@/views/BooksList.vue';
 import WishListBooksVue from '@/views/WishListBooks.vue';
 import ReadBooksVue from '@/views/ReadBooks.vue';
@@ -8,6 +10,14 @@ import LogInVue from '@/views/LogIn.vue';
 import SignInVue from '@/views/SignIn.vue';
 
 import HomeView from '../views/home.vue';
+
+function AuthGuard(from, to, next) {
+  if (Store.getters.getIsUserAuthenticated) {
+    next();
+  } else {
+    next('/signin');
+  }
+}
 
 const routes = [
   {
@@ -24,16 +34,19 @@ const routes = [
     path: '/wishlist',
     name: 'wishlist',
     component: WishListBooksVue,
+    beforeEnter: AuthGuard,
   },
   {
     path: '/read',
     name: 'read',
     component: ReadBooksVue,
+    beforeEnter: AuthGuard,
   },
   {
     path: '/profile',
     name: 'profile',
     component: UserProfileVue,
+    beforeEnter: AuthGuard,
   },
   {
     path: '/login',

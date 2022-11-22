@@ -3,6 +3,9 @@
     class="mx-auto"
     max-width="500"
   >
+   <v-form
+    v-model="valid"
+    @submit.prevent="login">
     <v-container>
       <v-card-title
         class="text-h5 font-weight-bold d-flex justify-center">
@@ -14,7 +17,7 @@
         name="email"
         variant="underlined"
         prepend-inner-icon="mdi-account-outline"
-        required
+        :rules="[rules.required, rules.emailRule]"
       ></v-text-field>
 
       <v-text-field
@@ -51,12 +54,14 @@
       <v-spacer></v-spacer>
 
       <v-btn color="success"
-        @click.prevent="login"
-        :disabled="processing">
+        @click="login"
+        :disabled="processing || !valid"
+        type="submit">
         Login
         <v-icon icon="mdi-chevron-right" end></v-icon>
       </v-btn>
     </v-card-actions>
+  </v-form>
   </v-card>
 </template>
 <script>
@@ -66,9 +71,11 @@ export default {
       email: null,
       password: null,
       show1: true,
+      valid: false,
       rules: {
-        required: (value) => !!value || 'Required.',
-        min: (v) => v.length >= 7 || 'Min 7 characters',
+        required: (value) => !!value || 'Required field',
+        min: (v) => v.length >= 7 || 'Minimum 7 characters',
+        emailRule: (v) => /^([a-z0-9_-]+\.)*[a-z0-9_-]+@[a-z0-9_-]+(\.[a-z0-9_-]+)*\.[a-z]{2,6}$/.test(v) || 'Incorrect email',
       },
     };
   },
