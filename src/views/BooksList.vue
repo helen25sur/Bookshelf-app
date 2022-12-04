@@ -1,8 +1,9 @@
 <template>
   <v-container>
-    <div class="d-flex">
-      <h1 class="w-50">Books List</h1>
-    <!-- <v-btn @click="getList">Get List</v-btn> -->
+    <div class="d-flex flex-column wrap">
+      <h1 class="">Top 5 books for all the Best Sellers lists for specified date</h1>
+    <!-- <v-btn @click="search">Search</v-btn> -->
+    <div class="block-selects d-md-flex wrap">
       <v-select
         :items="reverseYears"
         v-model="selectedYear"
@@ -11,7 +12,7 @@
         label="Select year"
         variant="solo"
         density="compact"
-        class="w-15 mr-3"></v-select>
+        class="mr-md-3"></v-select>
       <v-select
         :items="months"
         item-title="label"
@@ -22,8 +23,9 @@
         label="Select month"
         variant="solo"
         density="compact"
-        class="w-15"
+        class=""
         ></v-select>
+    </div>
     </div>
     <v-card
       v-for="(list) in lists" :key="list.list_id" class="my-8 elevation-10">
@@ -33,6 +35,11 @@
         <v-list-item
           v-for="(book) in list.books"
           :key="book.primary_isbn13">
+          <v-avatar
+            class="rank"
+            size="32"
+            color="primary"
+            :content="book.rank">{{book.rank}}</v-avatar>
           <div class="image-book-block">
             <img class="w-100 rounded-lg" :alt="book.title"
               :src="book.book_image" />
@@ -47,7 +54,9 @@
             class="mt-2"
             append-icon="mdi-book"
             variant="outlined"
-            color="primary">More... </v-btn>
+            color="primary"
+            :to="{name: 'book',
+                 params: {id: book.primary_isbn13 }}">More... </v-btn>
 
         </v-list-item>
       </v-list>
@@ -93,12 +102,17 @@ export default {
       this.lists = await booksService.getAll();
       console.log(this.lists);
     },
+    // TODO: save selects value
     async selectedValue() {
       console.log(this.selectedYear, this.selectedMonth);
       if (this.selectedYear && this.selectedMonth) {
         this.lists = await booksService.getAll(this.selectedYear, this.selectedMonth);
       }
     },
+    // async search() {
+    //   const data = await booksService.searchByQuery();
+    //   console.log(data);
+    // },
   },
   computed: {
     reverseYears() {
@@ -109,18 +123,29 @@ export default {
 </script>
 
 <style scoped>
+  .block-selects {
+    min-width: 50%;
+    margin-left: auto;
+  }
   .image-book-block {
     min-height: 150px;
   }
   .v-list {
     display: grid;
-    grid-template-columns: repeat(auto-fill, 270px);
+    grid-template-columns: repeat(auto-fill, 280px);
     align-items: self-start;
     justify-content: center;
     gap: 20px;
   }
 
   .v-list-item-title {
-    white-space: wpap;
+    white-space: wrap;
+  }
+
+  .v-avatar.v-avatar--density-default {
+    position: absolute;
+    top: 15px;
+    left: 25px;
+    font-weight: bold;
   }
 </style>

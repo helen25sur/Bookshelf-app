@@ -3,6 +3,7 @@ import { createRouter, createWebHistory } from 'vue-router';
 import Store from '@/store';
 
 import BooksListVue from '@/views/BooksList.vue';
+import BookDetailVue from '@/views/BookDetail.vue';
 import WishListBooksVue from '@/views/WishListBooks.vue';
 import ReadBooksVue from '@/views/ReadBooks.vue';
 import UserProfileVue from '@/views/UserProfile.vue';
@@ -29,6 +30,12 @@ const routes = [
     path: '/books',
     name: 'books',
     component: BooksListVue,
+  },
+  {
+    path: '/books/:id',
+    name: 'book',
+    props: true,
+    component: BookDetailVue,
   },
   {
     path: '/wishlist',
