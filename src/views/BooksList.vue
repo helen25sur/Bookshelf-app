@@ -5,6 +5,16 @@
     <!-- <v-btn @click="search">Search</v-btn> -->
     <div class="block-selects d-md-flex wrap">
       <v-select
+        :items="listsNamesSelect"
+        v-model="selectedLists"
+        label="Select lists"
+        multiple
+        clearable
+        variant="solo"
+        density="compact"
+        class="mr-md-3"
+      ></v-select>
+      <v-select
         :items="reverseYears"
         v-model="selectedYear"
         @update:menu="selectedValue"
@@ -28,8 +38,8 @@
     </div>
     </div>
     <v-card
-      v-for="(list) in lists" :key="list.list_id" class="my-8 elevation-10">
-      <v-card-title class="text-primary">{{list.list_name}}</v-card-title>
+      v-for="(list) in filteredLists" :key="list.list_id" class="my-8 elevation-10">
+      <v-card-title class="text-primary">{{list.display_name}}</v-card-title>
       <v-divider color="primary" role="presentation"></v-divider>
       <v-list>
         <v-list-item
@@ -47,7 +57,7 @@
           <div>
             <v-list-item-title class="text-primary">{{ book.title }}</v-list-item-title>
             <v-list-item-title>{{ book.author }}</v-list-item-title>
-            <p>{{ book.description }}</p>
+            <p class="book-descr">{{ book.description }}</p>
             <p class="text-surface-variant mt-2">Publisher: {{ book?.publisher }}</p>
           </div>
           <v-btn
@@ -72,13 +82,13 @@ const booksService = new BooksService();
 export default {
   created() {
     this.getList();
-    // this.lists = await booksService.getAll();
   },
   data() {
     return {
       lists: [],
+      listsNames: [],
       years: ['2000', '2001', '2002', '2003', '2004', '2005', '2006', '2007', '2008', '2009', '2010',
-        '2011', '2012', '2013', '2014', '2015', '2016', '2017', '2018', '2019', '2020', '2021', '2022'],
+        '2011', '2012', '2013', '2014', '2015', '2016', '2017', '2018', '2019', '2020', '2021', '2022', '2023'],
       months: [
         { value: '01', label: 'January' },
         { value: '02', label: 'February' },
@@ -95,12 +105,13 @@ export default {
       ],
       selectedYear: null,
       selectedMonth: null,
+      selectedLists: null,
     };
   },
   methods: {
     async getList() {
       this.lists = await booksService.getAll();
-      console.log(this.lists);
+      this.listsNames = await booksService.getListsNames();
     },
     // TODO: save selects value
     async selectedValue() {
@@ -109,14 +120,19 @@ export default {
         this.lists = await booksService.getAll(this.selectedYear, this.selectedMonth);
       }
     },
-    // async search() {
-    //   const data = await booksService.searchByQuery();
-    //   console.log(data);
-    // },
   },
   computed: {
     reverseYears() {
       return [...this.years].reverse();
+    },
+    listsNamesSelect() {
+      const newArr = [];
+      this.listsNames.forEach((n) => newArr.push(n.display_name));
+      return newArr;
+    },
+    filteredLists() {
+      // eslint-disable-next-line max-len
+      return this.selectedLists?.length > 0 ? [...this.lists].filter((l) => this.selectedLists.includes(l.display_name)) : this.lists;
     },
   },
 };
@@ -125,6 +141,7 @@ export default {
 <style scoped>
   .block-selects {
     min-width: 50%;
+    max-width: 100%;
     margin-left: auto;
   }
   .image-book-block {

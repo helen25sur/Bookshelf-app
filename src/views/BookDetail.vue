@@ -3,7 +3,7 @@
     <v-card v-if="book" class="book-page mx-auto pa-6">
       <div class="card-content">
         <div class="cover-book-block">
-          <img class="rounded-lg" :alt="book.title" :src="(book.imageLinks.thumbnail)" />
+          <img class="cover-img rounded-lg" :alt="book.title" :src="(book.imageLinks.thumbnail)" />
         </div>
         <div class="book-info">
           <h1
@@ -26,7 +26,7 @@
             class="text-primary">
             {{ category }}</v-chip>
           </v-chip-group>
-          <p>{{ book.description }}</p>
+          <p class="book-descr">{{ book.description }}</p>
           <p v-if="book.publisher" class="text-surface-variant mt-2"
             >Publisher: {{ book.publisher }}</p>
         </div>
@@ -82,7 +82,7 @@ export default {
   display: flex;
   align-items: center;
   justify-content: center;
-  height: calc(100vh - 64px - 72px);
+  height: 100%;
 }
 .book-page {
   max-width: 70%;
@@ -91,15 +91,30 @@ export default {
 
 .card-content{
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
 }
 
 .cover-book-block {
-  width: 20%;
+  /* min-width: 30%; */
+  /* max-width: 70%; */
+  width: max-content;
   text-align: center;
+  margin-right: 5%;
 }
 
 .book-info {
-  width: 75%;
+  max-width: 70%;
+  min-width: 60%;
+}
+
+.book-descr {
+  max-height: 60vh;
+  overflow: hidden;
+}
+
+.cover-img {
+  min-width: 175px;
 }
 </style>

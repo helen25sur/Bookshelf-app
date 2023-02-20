@@ -1,5 +1,8 @@
 <template>
-  <h1>Home</h1>
+  <div class="banner-block">
+    <img src="../../public/img/banner.png" alt="main banner">
+  </div>
+
 </template>
 
 <script>
