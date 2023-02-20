@@ -22,46 +22,46 @@ function AuthGuard(from, to, next) {
 
 const routes = [
   {
-    path: '/',
+    path: '/Bookshelf-app/',
     name: 'home',
     component: HomeView,
   },
   {
-    path: '/books',
+    path: '/Bookshelf-app/books',
     name: 'books',
     component: BooksListVue,
   },
   {
-    path: '/books/:id',
+    path: '/Bookshelf-app/books/:id',
     name: 'book',
     props: true,
     component: BookDetailVue,
   },
   {
-    path: '/wishlist',
+    path: '/Bookshelf-app/wishlist',
     name: 'wishlist',
     component: WishListBooksVue,
     beforeEnter: AuthGuard,
   },
   {
-    path: '/read',
+    path: '/Bookshelf-app/read',
     name: 'read',
     component: ReadBooksVue,
     beforeEnter: AuthGuard,
   },
   {
-    path: '/profile',
+    path: '/Bookshelf-app/profile',
     name: 'profile',
     component: UserProfileVue,
     beforeEnter: AuthGuard,
   },
   {
-    path: '/login',
+    path: '/Bookshelf-app/login',
     name: 'login',
     component: LogInVue,
   },
   {
-    path: '/signin',
+    path: '/Bookshelf-app/signin',
     name: 'signin',
     component: SignInVue,
   },
