@@ -115,7 +115,8 @@ export default {
     },
     // TODO: save selects value
     async selectedValue() {
-      console.log(this.selectedYear, this.selectedMonth);
+      // console.log(this.selectedYear, this.selectedMonth);
+      booksService.searchByQuery();
       if (this.selectedYear && this.selectedMonth) {
         this.lists = await booksService.getAll(this.selectedYear, this.selectedMonth);
       }

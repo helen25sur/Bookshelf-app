@@ -7,8 +7,8 @@
         </div>
         <div class="book-info">
           <h1
-            class="text-primary text-h3">{{ book.title }}</h1>
-          <h2 class="text-h4"
+            class="text-primary text-h4 book-title">{{ book.title }}</h1>
+          <h2 class="text-h5"
             v-for="(author, idx) in book.authors" :key="idx">
               {{ author }}</h2>
           <v-rating
@@ -85,7 +85,7 @@ export default {
   height: 100%;
 }
 .book-page {
-  max-width: 70%;
+  max-width: 100%;
   min-width: 50%;
 }
 
@@ -117,4 +117,24 @@ export default {
 .cover-img {
   min-width: 175px;
 }
+
+.v-card-actions {
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+@media screen and (max-width: 750px) {
+  .book-info {
+    max-width: 90%;
+  }
+
+}
+
+@media screen and (max-width: 488px) {
+  .v-card-actions .v-btn ~ .v-btn {
+    -webkit-margin-start: 0;
+    margin-inline-start: 0;
+  }
+}
+
 </style>
