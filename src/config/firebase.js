@@ -7,7 +7,7 @@
 // Your web app's Firebase configuration
 // For Firebase JS SDK v7.20.0 and later, measurementId is optional
 export default {
-  apiKey: 'AIzaSyAgCmN03RlNVSlgHHPi54dZ7oUtlyjlAg8',
+  apiKey: process.env.VUE_APP_API_KEY_GB,
   authDomain: 'bookselfapp-6ef1c.firebaseapp.com',
   projectId: 'bookselfapp-6ef1c',
   storageBucket: 'bookselfapp-6ef1c.appspot.com',

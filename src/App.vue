@@ -18,4 +18,4 @@ export default {
     AppFooter,
   },
 };
-</script>>
+</script>

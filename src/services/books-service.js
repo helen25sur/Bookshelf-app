@@ -5,16 +5,20 @@ const apiKey = process.env.VUE_APP_API_KEY_NYT;
 const googleBookApi = process.env.VUE_APP_API_KEY_GB;
 
 export default class Books {
-  #apiUrl = 'https://api.nytimes.com/svc/books/v3/lists/overview.json';
+  #apiUrl = 'https://api.nytimes.com/svc/books/v3/';
 
   #apiUrlLists = 'https://api.nytimes.com/svc/books/v3/lists/names.json';
 
   // TODO: add current year & month for getAll
 
   // eslint-disable-next-line no-return-await
-  getAll = async (year = '2023', month = '02') => await fetch(`${this.#apiUrl}?published_date=${year}-${month}-01&api-key=${apiKey}`)
+  getAll = async (year = '2023', month = '02') => await fetch(`${this.#apiUrl}lists/overview.json?published_date=${year}-${month}-01&api-key=${apiKey}`)
     .then((response) => response.json())
     .then((data) => data.results.lists);
+
+  getOneLastList = async () => await fetch(`${this.#apiUrl}lists/overview.json?&api-key=${apiKey}`)
+    .then((response) => response.json())
+    .then((data) => data.results.lists[0].books);
 
   getListsNames = async () => await fetch(`${this.#apiUrlLists}?api-key=${apiKey}`)
     .then((response) => response.json())

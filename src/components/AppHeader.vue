@@ -107,7 +107,7 @@ export default {
     logout() {
       this.dialog = false;
       this.$store.dispatch('LOGOUT');
-      this.$router.push({ path: '/' });
+      this.$router.push({ path: '/Bookshelf-app/' });
     },
   },
 };

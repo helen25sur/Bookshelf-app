@@ -16,7 +16,7 @@ function AuthGuard(from, to, next) {
   if (Store.getters.getIsUserAuthenticated) {
     next();
   } else {
-    next('/signin');
+    next('/Bookshelf-app/signin');
   }
 }
 
