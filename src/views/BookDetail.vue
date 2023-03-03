@@ -19,14 +19,15 @@
             half-increments
             readonly
           ></v-rating>
-          <v-chip-group>
+          <v-chip-group
+            class="d-flex flex-wrap">
             <v-chip
             v-for="(category, idx) in book.categories" :key="idx"
             variant="outlined"
             class="text-primary">
             {{ category }}</v-chip>
           </v-chip-group>
-          <p class="book-descr">{{ book.description }}</p>
+          <div v-html="book.description" class="book-descr"></div>
           <p v-if="book.publisher" class="text-surface-variant mt-2"
             >Publisher: {{ book.publisher }}</p>
         </div>
@@ -55,23 +56,22 @@ export default {
   },
   created() {
     this.getBook();
-    this.getCover();
   },
   data() {
     return {
       book: null,
-      cover: null,
     };
   },
   methods: {
     async getBook() {
-      console.log(this.$props.id);
-      this.book = await booksService.getDataByISBNFromGoogle(this.$props.id);
-      console.log(this.book);
+      this.book = await booksService.getDataByIDFromGoogle(this.$props.id);
+      if (this.book === undefined) {
+        this.getBookISBN(this.$props.id);
+      }
     },
-    async getCover() {
-      this.cover = await booksService.getDataByISBNFromOL(this.$props.id);
-      console.log(this.cover);
+
+    async getBookISBN() {
+      this.book = await booksService.getDataByISBNFromGoogle(this.$props.id);
     },
   },
 };
@@ -127,7 +127,6 @@ export default {
   .book-info {
     max-width: 90%;
   }
-
 }
 
 @media screen and (max-width: 488px) {
