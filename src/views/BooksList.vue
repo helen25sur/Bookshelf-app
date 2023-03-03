@@ -96,16 +96,18 @@
             size="32"
             color="primary"
             :content="book.rank">{{book.rank}}</v-avatar>
-          <div class="image-book-block">
-            <img class="w-100 rounded-lg" :alt="book.title"
-              :src="book.book_image" />
-          </div>
-          <div>
-            <v-list-item-title class="text-primary">{{ book.title }}</v-list-item-title>
-            <v-list-item-title>{{ book.author }}</v-list-item-title>
-            <p class="book-descr">{{ book.description }}</p>
-            <p class="text-surface-variant mt-2">Publisher: {{ book?.publisher }}</p>
-          </div>
+            <div class="card-book-content">
+              <div class="image-book-block">
+                <img class="w-100 rounded-lg" :alt="book.title"
+                :src="book.book_image" />
+              </div>
+              <div>
+                <v-list-item-title class="text-primary">{{ book.title }}</v-list-item-title>
+                <v-list-item-title>{{ book.author }}</v-list-item-title>
+                <p class="book-descr">{{ book.description }}</p>
+                <p class="text-surface-variant mt-2">Publisher: {{ book?.publisher }}</p>
+              </div>
+            </div>
           <!-- <v-btn
             class="mt-2"
             append-icon="mdi-book"
@@ -220,12 +222,6 @@ export default {
   }
   .selects>.v-input {
     min-width: 200px;
-  }
-  .book-section .book-cards-section {
-    align-items: stretch;
-  }
-  .book-cards-section .v-list-item__content {
-    align-self: start;
   }
   .image-book-block {
     min-height: 150px;
