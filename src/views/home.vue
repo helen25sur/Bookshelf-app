@@ -6,6 +6,8 @@
     </h2>
     <h3 class="text-h5 text-center mb-3">Combined Print & E-Book Fiction</h3>
     <div class="d-flex flex-wrap align-stretch justify-center justify-content-space-between mb-6">
+    <loader-component class="d-flex my-6 mx-auto" size="65" width="6" v-if="list.length === 0"></loader-component>
+
       <div v-for="(book) in list" :key="book.primary_isbn13"
         class="d-flex flex-wrap justify-content-space-between align-stretch ma-4">
         <v-card :to="{
@@ -27,12 +29,15 @@
 <script>
 // @ is an alias to /src
 import BooksService from '@/services/books-service';
+import LoaderComponent from '@/components/LoaderComponent.vue';
 
 const booksService = new BooksService();
 
 export default {
   name: 'HomeView',
-  components: {},
+  components: {
+    LoaderComponent,
+  },
   created() {
     this.getList();
   },

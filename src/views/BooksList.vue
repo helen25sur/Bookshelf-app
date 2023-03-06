@@ -63,6 +63,7 @@
         <v-divider></v-divider>
         </v-list-item>
     </v-list>
+    <loader-component class="d-flex my-6 mx-auto" v-if="filteredLists.length === 0" size="65" width="6" ></loader-component>
     <v-card
       v-for="(list) in filteredLists" :key="list.list_id" class="book-section my-8 elevation-10">
       <v-card-title class="text-primary">{{list.display_name}}</v-card-title>
@@ -90,13 +91,6 @@
                 <p class="text-surface-variant mt-2">Publisher: {{ book?.publisher }}</p>
               </div>
             </div>
-          <!-- <v-btn
-            class="mt-2"
-            append-icon="mdi-book"
-            variant="outlined"
-            color="primary"
-            :to="{name: 'book',
-                 params: {id: book.primary_isbn13 }}">More... </v-btn> -->
         </v-list-item>
       </v-list>
     </v-card>
@@ -105,10 +99,14 @@
 
 <script>
 import BooksService from '@/services/books-service';
+import LoaderComponent from '@/components/LoaderComponent.vue';
 
 const booksService = new BooksService();
 
 export default {
+  components: {
+    LoaderComponent,
+  },
   created() {
     this.getList();
     this.$router.afterEach((to) => {

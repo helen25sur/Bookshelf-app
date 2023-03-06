@@ -1,5 +1,6 @@
 <template>
   <v-container class="book-detail">
+    <loader-component class="d-flex my-6 mx-auto" v-if="!book" size="65" width="6" ></loader-component>
     <v-card v-if="book" class="book-page mx-auto pa-6">
       <div class="card-content">
         <div class="cover-book-block">
@@ -45,9 +46,13 @@
 
 <script>
 import BooksService from '@/services/books-service';
+import LoaderComponent from '@/components/LoaderComponent.vue';
 
 const booksService = new BooksService();
 export default {
+  components: {
+    LoaderComponent,
+  },
   props: {
     id: {
       type: String,
