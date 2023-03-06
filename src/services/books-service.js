@@ -11,7 +11,7 @@ export default class Books {
   // TODO: add current year & month for getAll
 
   // eslint-disable-next-line no-return-await
-  getAll = async (year = '2023', month = '02') => await fetch(`${this.#apiUrl}?published_date=${year}-${month}-01&api-key=${apiKey}`)
+  getAll = async (date = '2023-03-01') => await fetch(`${this.#apiUrl}?published_date=${date}&api-key=${apiKey}`)
     .then((response) => response.json())
     .then((data) => data.results.lists);
 

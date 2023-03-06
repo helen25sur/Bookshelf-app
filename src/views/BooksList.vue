@@ -34,36 +34,17 @@
         density="compact"
         class="mr-md-3"
       ></v-select>
-      <v-select
-        :items="reverseYears"
-        v-model="selectedYear"
-        @update:menu="selectedValue"
-        clearable
-        label="Select year"
-        variant="solo"
-        density="compact"
-        class="mr-md-3"></v-select>
-      <v-select
-        :items="months"
-        item-title="label"
-        item-value="value"
-        v-model="selectedMonth"
-        @update:menu="selectedValue"
-        clearable
-        label="Select month"
-        variant="solo"
-        density="compact"
-        class=""
-        ></v-select>
       </div>
-        <!-- <v-text-field
+        <v-text-field
+        v-model="date"
+        @change="selectedValue"
         variant="solo"
-        prepend-icon="mdi-event"
         density="compact"
         type="date"
         name="data-list"
         id="data-list"
-        label="Pick the date"> </v-text-field> -->
+        label="Pick the date">
+         </v-text-field>
     </div>
     </div>
     <v-list
@@ -138,28 +119,9 @@ export default {
     }
   },
   data: () => ({
-    // date: new Date().toISOString().substr(0, 10),
-    // menu1: false,
+    date: null,
     lists: [],
     listsNames: [],
-    years: ['2000', '2001', '2002', '2003', '2004', '2005', '2006', '2007', '2008', '2009', '2010',
-      '2011', '2012', '2013', '2014', '2015', '2016', '2017', '2018', '2019', '2020', '2021', '2022', '2023'],
-    months: [
-      { value: '01', label: 'January' },
-      { value: '02', label: 'February' },
-      { value: '03', label: 'March' },
-      { value: '04', label: 'April' },
-      { value: '05', label: 'May' },
-      { value: '06', label: 'June' },
-      { value: '07', label: 'July' },
-      { value: '08', label: 'August' },
-      { value: '09', label: 'September' },
-      { value: '10', label: 'October' },
-      { value: '11', label: 'November' },
-      { value: '12', label: 'December' },
-    ],
-    selectedYear: null,
-    selectedMonth: null,
     selectedLists: null,
     searchQuery: null,
     searchResults: [],
@@ -172,8 +134,8 @@ export default {
     },
     // TODO: save selects value
     async selectedValue() {
-      if (this.selectedYear && this.selectedMonth) {
-        this.lists = await booksService.getAll(this.selectedYear, this.selectedMonth);
+      if (this.date) {
+        this.lists = await booksService.getAll(this.date);
       }
     },
     async search() {
