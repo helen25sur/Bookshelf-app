@@ -11,11 +11,11 @@
 export default {
   props: {
     size: {
-      type: Number,
+      type: String,
       required: true,
     },
     width: {
-      type: Number,
+      type: String,
       required: true,
     },
   },

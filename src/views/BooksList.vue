@@ -221,4 +221,28 @@ export default {
     justify-content: start;
     padding-left: 26px;
   }
+
+@media screen and (max-height: 520px) {
+  .book-cards-section {
+    grid-template-columns: repeat(auto-fill, 260px);
+  }
+}
+
+@media screen and (max-height: 460px) {
+  .book-cards-section {
+    grid-template-columns: repeat(auto-fill, 240px);
+  }
+}
+
+@media screen and (max-height: 410px) {
+  .book-cards-section {
+    grid-template-columns: repeat(auto-fill, 220px);
+  }
+}
+
+@media screen and (max-height: 380px) {
+  .book-cards-section {
+    grid-template-columns: repeat(auto-fill, 200px);
+  }
+}
 </style>
