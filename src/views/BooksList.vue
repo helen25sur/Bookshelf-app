@@ -4,11 +4,12 @@
       <h1 class="">Top 5 books for all the Best Sellers lists for specified date</h1>
     <div class="block-selects d-md-flex wrap align-center">
     <v-form
-      @submit.prevent="search"
+      @submit.prevent="addSearchQueryToPath"
       method="GET" class="search-block d-flex me-auto">
       <v-text-field
-        @keyup.enter="search"
+        @keyup.enter="addSearchQueryToPath"
         @click:clear="closeSearchResults"
+        @blur="blurCloseResults"
         v-model="searchQuery"
         label="Search"
         variant="solo"
@@ -179,12 +180,19 @@ export default {
       if (this.searchQuery) {
         this.searchResults = await booksService.searchByQuery(this.searchQuery);
         this.isHidden = 'd-grid search-result-block';
-        this.$router.push({ path: '/Bookshelf-app/books', query: { q: this.searchQuery } });
+      }
+    },
+    blurCloseResults() {
+      if (this.searchQuery.length === 0) {
+        this.closeSearchResults();
       }
     },
     closeSearchResults() {
       this.isHidden = 'd-none';
       this.$router.push({ path: '/Bookshelf-app/books', query: { q: '' } });
+    },
+    addSearchQueryToPath() {
+      this.$router.push({ path: '/Bookshelf-app/books', query: { q: this.searchQuery } });
     },
   },
   computed: {
