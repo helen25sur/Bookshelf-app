@@ -1,5 +1,6 @@
 /* eslint-disable no-return-await */
 const apiKey = process.env.VUE_APP_API_KEY_NYT;
+const apiKeyGB = process.env.VUE_APP_API_KEY_GB;
 
 export default class Books {
   #apiUrl = 'https://api.nytimes.com/svc/books/v3/lists/overview.json';
@@ -23,11 +24,11 @@ export default class Books {
     .then((response) => response.json())
     .then((data) => data.results);
 
-  getDataByISBNFromGoogle = async (isbn) => await fetch(`${this.#googleBookUrl}?q=isbn:${isbn}`)
+  getDataByISBNFromGoogle = async (isbn) => await fetch(`${this.#googleBookUrl}?q=isbn:${isbn}&key=${apiKeyGB}`)
     .then((response) => response.json())
     .then((data) => data.items[0].volumeInfo);
 
-  getDataByIDFromGoogle = async (id) => await fetch(`${this.#googleBookUrl}/${id}`)
+  getDataByIDFromGoogle = async (id) => await fetch(`${this.#googleBookUrl}/${id}&key=${apiKeyGB}`)
     .then((response) => response.json())
     .then((data) => data.volumeInfo);
 

@@ -5,6 +5,23 @@ import {
   signOut,
 } from 'firebase/auth';
 
+import { getDatabase, ref, set } from 'firebase/database';
+
+function writeUserData(userId, email) {
+  const db = getDatabase();
+  set(ref(db, `users/${userId}`), {
+    profile: {
+      email,
+    },
+    'wishlist-books': [
+      { bookID: '' },
+    ],
+    'readlist-books': [
+      { bookID: '' },
+    ],
+  });
+}
+
 export default {
   state: {
     user: {
@@ -32,6 +49,7 @@ export default {
       createUserWithEmailAndPassword(auth, payload.email, payload.password)
         .then(() => {
           commit('SET_PROCESSING', false);
+          writeUserData(auth.currentUser.uid, payload.email);
         })
         .catch(({ message }) => {
           commit('SET_PROCESSING', false);

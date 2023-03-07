@@ -34,8 +34,14 @@
         </div>
       </div>
       <v-card-actions>
-        <v-btn class="mt-2" append-icon="mdi-list-box-outline" variant="outlined" color="primary">
-        Add to Wishlist </v-btn>
+        <v-btn
+          @click="addBookToWishlist"
+          :disabled="!isUserAuthenticated"
+          class="mt-2"
+          append-icon="mdi-list-box-outline"
+          variant="outlined"
+          color="primary">
+          Add to Wishlist </v-btn>
         <v-btn class="mt-2" append-icon="mdi-book" variant="outlined" color="primary">
         Mark as Read </v-btn>
       </v-card-actions>
@@ -77,6 +83,25 @@ export default {
 
     async getBookISBN() {
       this.book = await booksService.getDataByISBNFromGoogle(this.$props.id);
+    },
+
+    addBookToWishlist() {
+      const dataBook = {
+        bookID: this.$props.id, title: this.book.title, authors: this.book.authors, img: this.book.imageLinks.thumbnail,
+      };
+
+      this.$store.dispatch('ADD_BOOK_WISHLIST', dataBook);
+    },
+  },
+  computed: {
+    error() {
+      return this.$store.getters.getError;
+    },
+    processing() {
+      return this.$store.getters.getProcessing;
+    },
+    isUserAuthenticated() {
+      return this.$store.getters.getIsUserAuthenticated;
     },
   },
 };

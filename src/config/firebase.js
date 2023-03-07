@@ -14,6 +14,7 @@ export default {
   messagingSenderId: '817918338256',
   appId: '1:817918338256:web:ba832ae1cae3a8876aaad5',
   measurementId: 'G-WHYX5ZJV71',
+  databaseURL: 'https://bookselfapp-6ef1c-default-rtdb.europe-west1.firebasedatabase.app/',
 };
 
 // Initialize Firebase
