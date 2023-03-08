@@ -1,5 +1,4 @@
 import { getAuth } from 'firebase/auth';
-// child, push, get, child,
 
 import {
   getDatabase, ref, update, onValue, get,
@@ -34,7 +33,6 @@ async function getWishList(uid) {
   try {
     const snapshot = await get(bookListRef);
     if (snapshot.exists()) {
-      console.log(snapshot.val());
       return snapshot.val();
     }
     return null;
@@ -50,6 +48,15 @@ export default {
       wishlist: [],
     },
   },
+  getters: {
+    getStateWishlist: (state) => state.user.wishlist,
+  },
+  mutations: {
+    GET_WISHLIST(state) {
+      const auth = getAuth();
+      state.user.wishlist = getWishList(auth.currentUser.uid);
+    },
+  },
   actions: {
     ADD_BOOK_WISHLIST({ commit }, payload) {
       commit('SET_PROCESSING', true);
@@ -57,12 +64,6 @@ export default {
       const auth = getAuth();
 
       addNewBook(auth.currentUser.uid, payload);
-    },
-    GET_BOOKS_WISHLIST({ commit }) {
-      commit('SET_PROCESSING', true);
-      commit('CLEAR_ERROR');
-      const auth = getAuth();
-      return getWishList(auth.currentUser.uid);
     },
   },
 };

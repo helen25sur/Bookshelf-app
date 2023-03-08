@@ -139,11 +139,6 @@ export default {
   min-width: 60%;
 }
 
-.book-descr {
-  max-height: 60vh;
-  overflow: hidden;
-}
-
 .cover-img {
   min-width: 175px;
 }
