@@ -62,9 +62,7 @@ export default {
       commit('SET_PROCESSING', true);
       commit('CLEAR_ERROR');
       const auth = getAuth();
-
-      // getWishList(auth.currentUser.uid);
-      getWishList(auth.currentUser.uid);
+      return getWishList(auth.currentUser.uid);
     },
   },
 };
