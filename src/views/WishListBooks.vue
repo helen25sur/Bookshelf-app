@@ -1,6 +1,7 @@
 <template>
   <v-card class="wishlist-main">
     <h1>Wishlist Books</h1>
+    <loader-component class="d-flex my-6 mx-auto" v-if="!list" size="65" width="6" ></loader-component>
     <v-list v-if="list">
       <v-list-item
         v-for="book in list"
@@ -18,12 +19,12 @@
           :src="book.img"
           class="wishbook-cover rounded"
         ></v-img>
-          <v-list-item-title class="text-primary text-h5">{{ book.title }}</v-list-item-title>
-          <v-list-item-subtitle
+          <h2 style="white-space: pre-wrap;" class="text-primary text-h5">{{ book.title }}</h2>
+          <p
             v-for="(author, idx) in book.authors"
             :key="idx"
             class="mb-2 text-h6"
-            >{{ author }}</v-list-item-subtitle>
+            >{{ author }}</p>
         </div>
           <v-divider></v-divider>
         </v-list-item>
@@ -32,8 +33,12 @@
 </template>
 
 <script>
+import LoaderComponent from '@/components/LoaderComponent.vue';
 
 export default {
+  components: {
+    LoaderComponent,
+  },
   created() {
     this.getBooksWishlist();
   },

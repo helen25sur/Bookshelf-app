@@ -35,6 +35,7 @@
       </div>
       <v-card-actions>
         <v-btn
+          v-model="typeOfList"
           @click="addBookToWishlist"
           :disabled="!isUserAuthenticated"
           class="mt-2"
@@ -42,8 +43,15 @@
           variant="outlined"
           color="primary">
           Add to Wishlist </v-btn>
-        <v-btn class="mt-2" append-icon="mdi-book" variant="outlined" color="primary">
-        Mark as Read </v-btn>
+        <v-btn
+          v-model="typeOfList"
+          @click="addBookToReadlist"
+          :disabled="!isUserAuthenticated"
+          class="mt-2"
+          append-icon="mdi-book"
+          variant="outlined"
+          color="primary">
+          Mark as Read </v-btn>
       </v-card-actions>
 
     </v-card>
@@ -71,6 +79,7 @@ export default {
   data() {
     return {
       book: null,
+      typeOfList: null,
     };
   },
   methods: {
@@ -85,12 +94,23 @@ export default {
       this.book = await booksService.getDataByISBNFromGoogle(this.$props.id);
     },
 
-    addBookToWishlist() {
+    addBookToList() {
       const dataBook = {
         bookID: this.$props.id, title: this.book.title, authors: this.book.authors, img: this.book.imageLinks.thumbnail,
       };
-
-      this.$store.dispatch('ADD_BOOK_WISHLIST', dataBook);
+      if (this.typeOfList === 'wishlist') {
+        this.$store.dispatch('ADD_BOOK_WISHLIST', dataBook);
+      } else if (this.typeOfList === 'readlist') {
+        this.$store.dispatch('ADD_BOOK_READLIST', dataBook);
+      }
+    },
+    addBookToWishlist() {
+      this.typeOfList = 'wishlist';
+      this.addBookToList();
+    },
+    addBookToReadlist() {
+      this.typeOfList = 'readlist';
+      this.addBookToList();
     },
   },
   computed: {

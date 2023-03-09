@@ -13,12 +13,8 @@ function writeUserData(userId, email) {
     profile: {
       email,
     },
-    'wishlist-books': [
-      { bookID: '' },
-    ],
-    'readlist-books': [
-      { bookID: '' },
-    ],
+    'wishlist-books': [],
+    'readlist-books': [],
   });
 }
 
