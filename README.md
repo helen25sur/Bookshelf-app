@@ -1,4 +1,5 @@
 # my-bookshelf
+[![wakatime](https://wakatime.com/badge/github/helen25sur/Bookshelf-app.svg)](https://wakatime.com/badge/github/helen25sur/Bookshelf-app)
 
 ### Deploy: https://helen25sur.github.io/Bookshelf-app/
 
