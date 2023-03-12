@@ -26,10 +26,47 @@
             class="mb-2 text-h6"
             >{{ author }}</p>
         </div>
+        <v-btn
+            @click.stop.prevent="closeDialog = true"
+            variant="outlined"
+            size="small"
+            icon="mdi-close-thick"
+            color="error"
+            position="absolute"
+            class="btn-close"></v-btn>
           <v-divider></v-divider>
         </v-list-item>
     </v-list>
   </v-card>
+
+    <v-dialog
+      v-model="closeDialog"
+      min-width="350"
+      max-width="600"
+    >
+      <v-card>
+        <p class="text-body-1 pa-3">
+          Would you like to delete this book from Wishlist?
+        </p>
+        <v-card-actions>
+          <v-spacer></v-spacer>
+          <v-btn
+            color="green darken-1"
+            text
+            @click="closeDialog = false"
+          >
+            No
+          </v-btn>
+          <v-btn
+            color="red darken-1"
+            text
+            @click="close"
+          >
+            Yes
+          </v-btn>
+        </v-card-actions>
+      </v-card>
+    </v-dialog>
 </template>
 
 <script>
@@ -45,6 +82,7 @@ export default {
   data() {
     return {
       list: null,
+      closeDialog: false,
     };
   },
   methods: {
@@ -53,6 +91,11 @@ export default {
       const dataBooks = await this.$store.getters.getStateReadlist;
       this.list = dataBooks;
       console.log(this.list);
+    },
+    close() {
+      this.closeDialog = true;
+      console.log('Close');
+      this.closeDialog = false;
     },
   },
 };
@@ -74,6 +117,15 @@ export default {
   }
   .readbook-cover {
     grid-row: 1/-1;
+  }
+  .btn-close {
+    top: 6px;
+    right: 24px;
+    transition: background-color 0.3s ease-in;
+    z-index: 10;
+  }
+  .btn-close:hover {
+    background-color: #cf667940;
   }
   @media screen and (max-width: 680px) {
     .readlist .readlist-content {
