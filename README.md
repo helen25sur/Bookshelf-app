@@ -8,9 +8,7 @@
 ![Desktop version Wishlist](https://user-images.githubusercontent.com/65970892/224556295-6ec953ee-5c4c-4bca-9bbf-e028edd6e096.png)
 
 ### Mobile view
-![helen25sur github io_Bookshelf-app_books(iPhone 12 Pro)](https://user-images.githubusercontent.com/65970892/224556600-1fcbab82-af7b-40ab-bdda-66a2dd705687.png)
-![helen25sur github io_Bookshelf-app_books(iPhone 12 Pro) (1)](https://user-images.githubusercontent.com/65970892/224556614-ac5b21a4-01c4-4384-b67c-8a0749a834ee.png)
-![helen25sur github io_Bookshelf-app_books(iPhone 12 Pro) (2)](https://user-images.githubusercontent.com/65970892/224556637-c87c3cea-b043-4dbf-b3f6-59afc38f0ee5.png)
+<img src="https://user-images.githubusercontent.com/65970892/224556600-1fcbab82-af7b-40ab-bdda-66a2dd705687.png" alt="helen25sur github io_Bookshelf-app_books(iPhone 12 Pro)" width="300"> <img src="https://user-images.githubusercontent.com/65970892/224556614-ac5b21a4-01c4-4384-b67c-8a0749a834ee.png" alt="helen25sur github io_Bookshelf-app_books(iPhone 12 Pro)" width="300"> <img src="https://user-images.githubusercontent.com/65970892/224556637-c87c3cea-b043-4dbf-b3f6-59afc38f0ee5.png" alt="helen25sur github io_Bookshelf-app_books(iPhone 12 Pro)" width="300">
 
 ## Teqnologies
   * Vue.js
