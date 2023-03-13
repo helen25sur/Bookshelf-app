@@ -1,7 +1,7 @@
 import { getAuth } from 'firebase/auth';
 
 import {
-  getDatabase, ref, update, onValue, get,
+  getDatabase, ref, update, onValue, get, remove,
 } from 'firebase/database';
 
 function addNewBook(uid, bookData) {
@@ -41,6 +41,17 @@ async function getReadList(uid) {
   }
 }
 
+async function deleteBook(uid, bookID) {
+  const db = getDatabase();
+  const bookRef = ref(db, `users/${uid}/readlist-books/${bookID}`);
+
+  try {
+    remove(bookRef);
+  } catch (error) {
+    console.error(error);
+  }
+}
+
 export default {
   state: {
     user: {
@@ -64,6 +75,13 @@ export default {
       const auth = getAuth();
 
       addNewBook(auth.currentUser.uid, payload);
+    },
+    DELETE_READ_BOOK({ commit }, bookID) {
+      commit('SET_PROCESSING', true);
+      commit('CLEAR_ERROR');
+      const auth = getAuth();
+
+      deleteBook(auth.currentUser.uid, bookID);
     },
   },
 };

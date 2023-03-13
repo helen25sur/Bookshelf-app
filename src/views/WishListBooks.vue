@@ -27,7 +27,7 @@
             >{{ author }}</p>
         </div>
           <v-btn
-            @click.stop.prevent="closeDialog = true"
+            @click.stop.prevent="closeDialog = true; currentBookID = book.bookID"
             variant="outlined"
             size="small"
             icon="mdi-close-thick"
@@ -60,7 +60,7 @@
           <v-btn
             color="red darken-1"
             text
-            @click="close"
+            @click="deleteBook"
           >
             Yes
           </v-btn>
@@ -83,6 +83,7 @@ export default {
     return {
       list: null,
       closeDialog: false,
+      currentBookID: '',
     };
   },
   methods: {
@@ -91,10 +92,13 @@ export default {
       const dataBooks = await this.$store.getters.getStateWishlist;
       this.list = dataBooks;
     },
-    close() {
+    async deleteBook() {
       this.closeDialog = true;
-      console.log('Close');
+      await this.$store.dispatch('DELETE_BOOK', this.currentBookID);
       this.closeDialog = false;
+      const updateList = JSON.parse(JSON.stringify(this.list));
+      delete updateList[this.currentBookID];
+      this.list = updateList;
     },
   },
 };
