@@ -30,7 +30,7 @@
         prepend-inner-icon="mdi-lock-outline"
         :append-icon="show1 ? 'mdi-eye' : 'mdi-eye-off'"
         :rules="[rules.required, rules.min]"
-        :type="show1 ? 'text' : 'password'"
+        :type="show1 ? 'password' : 'text'"
         @click:append="show1 = !show1"
         hint="At least 7 characters"
       ></v-text-field>
