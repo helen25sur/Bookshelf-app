@@ -21,14 +21,14 @@
 
           </v-card-text>
           <v-card-actions>
-            <v-btn class="ms-2" variant="outlined" color="primary">
+            <v-btn @click="isEditForm = true" class="ms-2" variant="outlined" color="primary">
               Edit Profile
             </v-btn>
           </v-card-actions>
         </div>
       </div>
     </v-card>
-    <v-card variant="outlined" class="mx-auto mt-10 pa-5" max-width="70%">
+    <v-card v-if="isEditForm" variant="outlined" class="mx-auto mt-10 pa-5" max-width="70%">
       <form>
         <v-text-field v-model="name" prepend-icon="mdi-account-edit" label="Name"></v-text-field>
 
@@ -42,8 +42,8 @@
           submit
           </v-btn>
 
-          <v-btn color="warning" variant="outlined">
-            clear
+          <v-btn @click="isEditForm = false" color="warning" variant="outlined">
+            cancel
           </v-btn>
         </v-card-actions>
       </form>
@@ -59,6 +59,7 @@ export default {
       name: '',
       email: '',
       aboutUserDescr: '',
+      isEditForm: false,
       rules: {
         required: (value) => !!value || 'Required field',
         emailRule: (v) => /^([a-z0-9_-]+\.)*[a-z0-9_-]+@[a-z0-9_-]+(\.[a-z0-9_-]+)*\.[a-z]{2,6}$/.test(v) || 'Incorrect email',
