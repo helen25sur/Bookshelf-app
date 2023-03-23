@@ -2,8 +2,8 @@
 <template>
   <v-container>
     <h1>User Profile</h1>
-    <v-card theme="dark" class="mx-auto" max-width="70%" variant="outlined">
-      <div v-if="!isLoading" class="d-flex flex-no-wrap justify-start pa-6">
+    <v-card theme="dark" class="user-card mx-auto" variant="outlined">
+      <div v-if="!isLoading" class="user-card-content d-flex flex-no-wrap justify-start pa-6">
         <v-avatar class="ma-3" size="225" rounded="0">
         <img :src="photoURL" :alt="displayName" width="225">
         </v-avatar>
@@ -28,7 +28,7 @@
       </div>
       <LoaderComponent v-else-if="isLoading" class="d-flex my-6 mx-auto" size="65" width="6"></LoaderComponent>
     </v-card>
-    <v-card v-if="isEditForm" variant="outlined" class="mx-auto mt-10 pa-5" max-width="70%">
+    <v-card v-if="isEditForm" variant="outlined" class="user-edit-form mx-auto mt-10 pa-5">
       <form @submit.prevent="saveUserChanges">
         <v-text-field v-model="displayName" prepend-icon="mdi-account-edit" label="Name" :value="displayName"></v-text-field>
 
@@ -114,3 +114,24 @@ export default {
   },
 };
 </script>
+
+<style scoped>
+.user-card,
+.user-edit-form {
+  max-width: 70%;
+}
+
+@media screen and (max-width: 960px) {
+  .user-card,
+  .user-edit-form {
+    max-width: 95%;
+  }
+}
+
+@media screen and (max-width: 780px) {
+  .user-card-content {
+    flex-direction: column;
+    align-items: center;
+  }
+}
+</style>
