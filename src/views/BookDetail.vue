@@ -80,18 +80,20 @@ export default {
     return {
       book: null,
       typeOfList: null,
+      // eslint-disable-next-line no-restricted-globals
+      isbn: history.state.isbn,
     };
   },
   methods: {
     async getBook() {
       this.book = await booksService.getDataByIDFromGoogle(this.$props.id);
-      if (this.book === undefined) {
-        this.getBookISBN(this.$props.id);
+      if (!this.book) {
+        await this.getBookISBN();
       }
     },
 
     async getBookISBN() {
-      this.book = await booksService.getDataByISBNFromGoogle(this.$props.id);
+      this.book = await booksService.getDataByISBNFromGoogle(this.isbn);
     },
 
     addBookToList() {

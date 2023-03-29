@@ -57,7 +57,10 @@
           v-for="item in searchResults"
           :key="item.id"
           :to="{name: 'book',
-              params: {id: item.id}}">
+              state: {
+                isbn: item.volumeInfo.industryIdentifiers[0].identifier
+              },
+              params: {id: item.id }}">
           <v-list-item-title>{{ item.volumeInfo.title }}</v-list-item-title>
           <v-list-item-subtitle class="mb-2">{{ item.volumeInfo.authors?.join(', ')}}</v-list-item-subtitle>
         <v-divider></v-divider>

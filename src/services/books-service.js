@@ -24,7 +24,7 @@ export default class Books {
     .then((response) => response.json())
     .then((data) => data.results);
 
-  getDataByISBNFromGoogle = async (isbn) => await fetch(`${this.#googleBookUrl}?q=isbn:${isbn}&key=${apiKeyGB}`)
+  getDataByISBNFromGoogle = async (isbn) => await fetch(`${this.#googleBookUrl}?q=isbn:${isbn}`)
     .then((response) => response.json())
     .then((data) => data.items[0].volumeInfo);
 
