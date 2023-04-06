@@ -12,7 +12,7 @@
         class="d-flex flex-wrap justify-content-space-between align-stretch ma-4">
         <v-card :to="{
           name: 'book',
-          params: { id: book.primary_isbn13 }
+          params: { id: book.primary_isbn13 },
         }">
           <v-img :src="book.book_image" class="bg-grey-lighten-2" alt="book.book_details.title">
           </v-img>

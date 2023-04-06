@@ -15,6 +15,7 @@
         variant="solo"
         density="compact"
         clearable
+        autocomplete="on"
       ></v-text-field>
       <v-btn
         type="submit"
@@ -57,10 +58,7 @@
           v-for="item in searchResults"
           :key="item.id"
           :to="{name: 'book',
-              state: {
-                isbn: item.volumeInfo.industryIdentifiers[0].identifier
-              },
-              params: {id: item.id }}">
+              params: {id: item.volumeInfo.industryIdentifiers[0].identifier }}">
           <v-list-item-title>{{ item.volumeInfo.title }}</v-list-item-title>
           <v-list-item-subtitle class="mb-2">{{ item.volumeInfo.authors?.join(', ')}}</v-list-item-subtitle>
         <v-divider></v-divider>
@@ -112,6 +110,7 @@ export default {
   },
   created() {
     this.getList();
+    // console.log(this.listsNames);
     this.$router.afterEach((to) => {
       this.searchQuery = to.query.q;
     });
@@ -146,7 +145,7 @@ export default {
       }
     },
     blurCloseResults() {
-      if (this.searchQuery.length === 0) {
+      if (!this.searchQuery) {
         this.closeSearchResults();
       }
     },
@@ -164,6 +163,7 @@ export default {
     },
     listsNamesSelect() {
       const newArr = [];
+      // console.log(this.listsNames);
       this.listsNames.forEach((n) => newArr.push(n.display_name));
       return newArr;
     },

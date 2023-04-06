@@ -11,28 +11,30 @@ export default class Books {
 
   // TODO: add current year & month for getAll
 
-  // eslint-disable-next-line no-return-await
-  getAll = async (date = '2023-03-01') => await fetch(`${this.#apiUrl}?published_date=${date}&api-key=${apiKey}`)
+  getAll = (date = '2023-03-01') => fetch(`${this.#apiUrl}?published_date=${date}&api-key=${apiKey}`)
     .then((response) => response.json())
     .then((data) => data.results.lists);
+    // .then((data) => console.log(data.results.lists));
 
-  getOneLastList = async () => await fetch(`${this.#apiUrl}?&api-key=${apiKey}`)
+  getOneLastList = () => fetch(`${this.#apiUrl}?&api-key=${apiKey}`)
     .then((response) => response.json())
     .then((data) => data.results.lists[0].books);
 
-  getListsNames = async () => await fetch(`${this.#apiUrlLists}?api-key=${apiKey}`)
+  getListsNames = () => fetch(`${this.#apiUrlLists}?api-key=${apiKey}`)
     .then((response) => response.json())
     .then((data) => data.results);
 
-  getDataByISBNFromGoogle = async (isbn) => await fetch(`${this.#googleBookUrl}?q=isbn:${isbn}`)
+  getDataByISBNFromGoogle = (isbn) => fetch(`${this.#googleBookUrl}?q=isbn:${isbn}&key=${apiKeyGB}`)
     .then((response) => response.json())
     .then((data) => data.items[0].volumeInfo);
+    // .then((data) => console.log(data, isbn));
 
-  getDataByIDFromGoogle = async (id) => await fetch(`${this.#googleBookUrl}/${id}&key=${apiKeyGB}`)
+  getDataByIDFromGoogle = (id) => fetch(`${this.#googleBookUrl}/${id}&key=${apiKeyGB}`)
     .then((response) => response.json())
-    .then((data) => data.volumeInfo);
+    // .then((data) => data.volumeInfo);
+    .then((data) => console.log(data.volumeInfo));
 
-  searchByQuery = async (value) => await fetch(`${this.#googleBookUrl}?q=${value}`)
+  searchByQuery = (value) => fetch(`${this.#googleBookUrl}?q=${value}`)
     .then((response) => response.json())
     .then((data) => data.items)
     .catch((error) => console.error(error));
