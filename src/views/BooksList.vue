@@ -1,7 +1,7 @@
 <template>
   <v-container>
     <div class="d-flex flex-column wrap">
-      <h1 class="">Top 5 books for all the Best Sellers lists for specified date</h1>
+      <h1 class="">Top 15 books for all the Best Sellers lists for specified date</h1>
     <div class="block-selects d-md-flex wrap align-center">
     <v-form
       @submit.prevent="addSearchQueryToPath"
@@ -24,16 +24,34 @@
         density="default"
       >Search</v-btn>
     </v-form>
-    <div class="selects d-md-flex wrap align-center">
+    <div class="selects d-md-flex w-33 wrap align-center mr-md-3">
       <v-select
-        :items="[]"
+        :items="[
+          'Combined Print & E-Book Fiction',
+          'Combined Print & E-Book Nonfiction',
+          'Hardcover Fiction',
+          'Hardcover Nonfiction',
+          'Paperback Trade Fiction',
+          'Paperback Nonfiction',
+          'Advice, How-To and Miscellaneous',
+          'Children’s Middle Grade Hardcover',
+          'Children’s Picture Books',
+          'Children’s & Young Adult Series',
+          'Young Adult Hardcover',
+          'Audio Fiction',
+          'Audio Nonfiction',
+          'Business',
+          'Graphic Books and Manga',
+          'Mass Market',
+          'Middle Grade Paperback',
+          'Young Adult Paperback',
+          ]"
         v-model="selectedLists"
         label="Select lists"
         multiple
         clearable
         variant="solo"
         density="compact"
-        class="mr-md-3"
       ></v-select>
       </div>
         <v-text-field
@@ -51,18 +69,19 @@
     <v-list
       :class="isHidden"
       :lines="false"
-      item-props>
+      item-props
+      fluid>
         <h3 class="text-primary">Search Results</h3>
-        <v-list-item
-          active-color="primary"
-          v-for="item in searchResults"
-          :key="item.id"
-          :to="{name: 'book',
-              params: {id: item.volumeInfo.industryIdentifiers[0].identifier }}">
-          <v-list-item-title>{{ item.volumeInfo.title }}</v-list-item-title>
-          <v-list-item-subtitle class="mb-2">{{ item.volumeInfo.authors?.join(', ')}}</v-list-item-subtitle>
+        <v-list-item active-color="primary" v-for="item in searchResults" :key="item.id" :to="{
+        name: 'book',
+        params: { id: item.volumeInfo.industryIdentifiers?.[0]?.identifier || item.id }
+      }">
+        <v-list-item-title>{{ item.volumeInfo.title }}</v-list-item-title>
+        <v-list-item-subtitle class="mb-2">
+          {{ item.volumeInfo.authors?.join(', ') || 'Unknown Author' }}
+        </v-list-item-subtitle>
         <v-divider></v-divider>
-        </v-list-item>
+      </v-list-item>
     </v-list>
     <loader-component class="d-flex my-6 mx-auto" v-if="filteredLists.length === 0" size="65" width="6" ></loader-component>
     <v-card

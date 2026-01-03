@@ -46,7 +46,7 @@
     >
       <v-card>
         <p class="text-body-1 pa-3">
-          Would you like to delete this book from Wishlist?
+          Would you like to delete this book from Readlist?
         </p>
         <v-card-actions>
           <v-spacer></v-spacer>

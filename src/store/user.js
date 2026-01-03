@@ -12,10 +12,11 @@ import {
   set,
   get,
   update,
-  onValue,
 } from 'firebase/database';
 
-import { getStorage, ref as refStorage, uploadBytes } from 'firebase/storage';
+import {
+  getStorage, ref as refStorage, uploadBytes, getDownloadURL,
+} from 'firebase/storage';
 
 function writeUserData(userId, email) {
   const db = getDatabase();
@@ -28,23 +29,22 @@ function writeUserData(userId, email) {
   });
 }
 
-function updateUserData(userId, data) {
-  const db = getDatabase();
-  const userProfileRef = ref(db, `users/${userId}/profile`);
-  try {
-    onValue(userProfileRef, (snapshot) => {
-      const dataBD = snapshot.val();
-      if (dataBD) {
-        const updates = {};
-        updates[`/users/${userId}/profile`] = data;
-        update(ref(db), updates);
-      }
-    });
-  } catch (error) {
-    console.log(error);
-  }
-}
-
+// function updateUserData(userId, data) {
+//   const db = getDatabase();
+//   const userProfileRef = ref(db, `users/${userId}/profile`);
+//   try {
+//     onValue(userProfileRef, (snapshot) => {
+//       const dataBD = snapshot.val();
+//       if (dataBD) {
+//         const updates = {};
+//         updates[`/users/${userId}/profile`] = data;
+//         update(ref(db), updates);
+//       }
+//     });
+//   } catch (error) {
+//     console.log(error);
+//   }
+// }
 // eslint-disable-next-line consistent-return
 async function getUserDate(userId) {
   const db = getDatabase();
@@ -60,14 +60,24 @@ async function getUserDate(userId) {
   }
 }
 
-function uploadImage(userId, file) {
+async function uploadImage(userId, file) {
   const storage = getStorage();
-  const storageRef = refStorage(storage, `avatars-${userId}`);
+  const storageRef = refStorage(storage, `avatars/${userId}`); // краще створити папку avatars/
 
-  // 'file' comes from the Blob or File API
-  uploadBytes(storageRef, file).then((snapshot) => {
+  try {
+    // 1. Завантажуємо файл
+    const snapshot = await uploadBytes(storageRef, file);
     console.log('Uploaded a file!', snapshot);
-  });
+
+    // 2. Отримуємо публічне посилання
+    const downloadURL = await getDownloadURL(snapshot.ref);
+
+    // 3. ПОВЕРТАЄМО це посилання
+    return downloadURL;
+  } catch (error) {
+    console.error('Помилка завантаження фото:', error);
+    throw error;
+  }
 }
 
 export default {
@@ -139,27 +149,53 @@ export default {
       // console.log(displayName, email, photoURL);
       // return { displayName, email, photoURL };
     },
-    UPDATE_USER_PROFILE({ commit }, payload) {
+    async UPDATE_USER_PROFILE({ commit }, payload) {
       commit('SET_PROCESSING', true);
       commit('CLEAR_ERROR');
       const auth = getAuth();
-      updateProfile(auth.currentUser, {
-        displayName: payload.displayName,
-        photoURL: payload.photoURL,
-      }).then(() => {
-        console.log('displayName & photoURL updated!', auth.currentUser);
-      }).catch((error) => {
-        console.log(error);
-      });
+      const user = auth.currentUser;
 
-      updateEmail(auth.currentUser, payload.email).then(() => {
-        console.log('Email updated!', auth.currentUser);
-      }).catch((error) => {
-        console.log(error);
-      });
+      try {
+        let finalPhotoURL = payload.photoURL;
 
-      updateUserData(auth.currentUser.uid, payload);
-      uploadImage(auth.currentUser.uid, payload.photoURL);
+        // 1. Спочатку завантажуємо фото в Storage (якщо це новий файл/Base64)
+        // payload.file — це той об'єкт, який ми маємо передати з компонента
+        if (payload.file) {
+          finalPhotoURL = await uploadImage(user.uid, payload.file);
+        }
+
+        // 2. Оновлюємо Auth Profile (тепер з коротким URL)
+        await updateProfile(user, {
+          displayName: payload.displayName,
+          photoURL: finalPhotoURL,
+        });
+        console.log('Auth profile updated!');
+
+        // 3. Оновлюємо Email, якщо він змінився
+        if (payload.email !== user.email) {
+          await updateEmail(user, payload.email);
+          console.log('Email updated!');
+        }
+
+        // 4. Оновлюємо базу даних (використовуємо await, щоб бути впевненими в записі)
+        // Створюємо чистий об'єкт для бази без об'єкта File
+        const dataToSave = {
+          displayName: payload.displayName,
+          email: payload.email,
+          photoURL: finalPhotoURL,
+          aboutUser: payload.aboutUser, // переконайтеся, що це поле є в payload
+        };
+
+        const db = getDatabase();
+        await update(ref(db, `users/${user.uid}/profile`), dataToSave);
+        console.log('Database updated!');
+
+        commit('SET_PROCESSING', false);
+      } catch (error) {
+        commit('SET_PROCESSING', false);
+        commit('SET_ERROR', error.message);
+        console.error('Update Profile Error:', error);
+      }
     },
   },
 };

@@ -2,7 +2,7 @@
   <div class="banner-block"></div>
   <v-container fluid>
     <h2 class="text-h4 text-primary text-center">
-      Top 5 books for all the Best Sellers
+      Top 15 books for all the Best Sellers
     </h2>
     <h3 class="text-h5 text-center mb-3">Combined Print & E-Book Fiction</h3>
     <div class="d-flex flex-wrap align-stretch justify-center justify-content-space-between mb-6">

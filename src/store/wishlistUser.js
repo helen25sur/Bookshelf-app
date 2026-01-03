@@ -10,19 +10,23 @@ function addNewBook(uid, bookData) {
 
   onValue(bookListRef, (snapshot) => {
     const data = snapshot.val();
-    if (!Object.keys(data).includes('wishlist-books')) {
-      const updates = {};
+    const updates = {};
+
+    // 1. ПЕРЕВІРКА: Якщо даних взагалі немає (null) або немає гілки 'wishlist-books'
+    if (!data || !data['wishlist-books']) {
       updates[`/users/${uid}/wishlist-books/`] = { [bookData.bookID]: bookData };
       return update(ref(db), updates);
     }
 
+    // 2. ПЕРЕВІРКА: Якщо список є, але в ньому ще немає цієї конкретної книги
     if (!Object.keys(data['wishlist-books']).includes(bookData.bookID)) {
-      const updates = {};
       updates[`/users/${uid}/wishlist-books/${bookData.bookID}`] = bookData;
       return update(ref(db), updates);
     }
 
     return data;
+  }, {
+    onlyOnce: true, // РЕКОМЕНДАЦІЯ: для операцій запису краще використовувати get() або onlyOnce
   });
 }
 

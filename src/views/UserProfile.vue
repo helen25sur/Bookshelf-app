@@ -54,6 +54,7 @@
 
 <script>
 import LoaderComponent from '@/components/LoaderComponent.vue';
+import { auth } from '@/config/firebase';
 
 export default {
   components: {
@@ -75,6 +76,7 @@ export default {
         min: (v) => v.length >= 20 || 'Minimum 20 characters',
       },
       isLoading: true,
+      selectedFile: null,
     };
   },
   methods: {
@@ -83,28 +85,42 @@ export default {
       this.$store.dispatch('UPDATE_USER_PROFILE', {
         displayName: this.displayName,
         email: this.email,
-        photoURL: this.photoURL,
+        photoURL: this.photoURL, // для прев'ю
+        file: this.selectedFile, // <--- ВАЖЛИВО: передайте об'єкт File
         aboutUser: this.aboutUserDescr,
       });
     },
     async getUserDate() {
-      const {
-        displayName,
-        email,
-        photoURL,
-        aboutUser,
-      } = await this.$store.dispatch('GET_USER_PROFILE');
-      this.displayName = displayName !== null ? displayName : 'UserName';
-      this.email = email !== null ? email : 'username@user.com';
-      this.photoURL = photoURL !== null ? photoURL : './img/Female_avatar.png';
-      this.aboutUserDescr = aboutUser !== null ? aboutUser : 'Write about yourself';
-      this.isLoading = false;
+      try {
+        // const auth = getAuth();
+        // 1. Спочатку беремо дані прямо з акаунта (вони там точно є після входу)
+        const { currentUser } = auth;
+        if (currentUser) {
+          this.email = currentUser.email;
+          this.displayName = currentUser.displayName || 'UserName';
+        }
+
+        // 2. Потім пробуємо завантажити додаткові дані з бази (About User, Photo тощо)
+        const userData = await this.$store.dispatch('GET_USER_PROFILE');
+
+        if (userData) {
+          // Якщо в базі є дані, вони пріоритетні
+          this.displayName = userData.displayName || this.displayName;
+          this.photoURL = userData.photoURL || './img/Female_avatar.png';
+          this.aboutUserDescr = userData.aboutUser || 'Write about yourself';
+        }
+      } catch (error) {
+        console.error('Profile load error:', error);
+      } finally {
+        this.isLoading = false;
+      }
     },
     onImagePicker(e) {
-      const { files } = e.target;
+      const file = e.target.files[0];
+      this.selectedFile = file;
 
       const fr = new FileReader();
-      fr.readAsDataURL(files[0]);
+      fr.readAsDataURL(file);
       fr.addEventListener('load', () => {
         const imageUrl = fr.result;
         // eslint-disable-next-line prefer-destructuring

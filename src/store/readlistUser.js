@@ -10,19 +10,21 @@ function addNewBook(uid, bookData) {
 
   onValue(bookListRef, (snapshot) => {
     const data = snapshot.val();
-    if (!Object.keys(data).includes('readlist-books')) {
-      const updates = {};
+    const updates = {};
+
+    if (!data || !data['readlist-books']) {
       updates[`/users/${uid}/readlist-books/`] = { [bookData.bookID]: bookData };
       return update(ref(db), updates);
     }
 
     if (!Object.keys(data['readlist-books']).includes(bookData.bookID)) {
-      const updates = {};
       updates[`/users/${uid}/readlist-books/${bookData.bookID}`] = bookData;
       return update(ref(db), updates);
     }
 
     return data;
+  }, {
+    onlyOnce: true,
   });
 }
 
