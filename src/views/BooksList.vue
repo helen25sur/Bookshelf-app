@@ -26,7 +26,7 @@
     </v-form>
     <div class="selects d-md-flex wrap align-center">
       <v-select
-        :items="listsNamesSelect"
+        :items="[]"
         v-model="selectedLists"
         label="Select lists"
         multiple
@@ -130,7 +130,7 @@ export default {
   methods: {
     async getList() {
       this.lists = await booksService.getAll();
-      this.listsNames = await booksService.getListsNames();
+      // this.listsNames = await booksService.getListsNames();
     },
     // TODO: save selects value
     async selectedValue() {
@@ -161,12 +161,12 @@ export default {
     reverseYears() {
       return [...this.years].reverse();
     },
-    listsNamesSelect() {
-      const newArr = [];
-      // console.log(this.listsNames);
-      this.listsNames.forEach((n) => newArr.push(n.display_name));
-      return newArr;
-    },
+    // listsNamesSelect() {
+    //   const newArr = [];
+    //   // console.log(this.listsNames);
+    //   // this.listsNames.forEach((n) => newArr.push(n.display_name));
+    //   return newArr;
+    // },
     filteredLists() {
       // eslint-disable-next-line max-len
       return this.selectedLists?.length > 0 ? [...this.lists].filter((l) => this.selectedLists.includes(l.display_name)) : this.lists;

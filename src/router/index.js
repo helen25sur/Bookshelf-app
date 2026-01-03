@@ -10,7 +10,7 @@ import UserProfileVue from '@/views/UserProfile.vue';
 import LogInVue from '@/views/LogIn.vue';
 import SignInVue from '@/views/SignIn.vue';
 
-import HomeView from '../views/Home.vue';
+import HomeView from '@/views/Home.vue';
 
 function AuthGuard(from, to, next) {
   if (Store.getters.getIsUserAuthenticated) {
