@@ -5,7 +5,7 @@
         class="hidden-md-and-up"
         variant="text" @click.stop="drawer = !drawer">
       </v-app-bar-nav-icon>
-      <router-link to="/Bookshelf-app/" class="mx-4" style="color: inherit">
+      <router-link to="/" class="mx-4" style="color: inherit">
         <v-toolbar-title>{{title}}</v-toolbar-title>
       </router-link>
       <v-spacer></v-spacer>
