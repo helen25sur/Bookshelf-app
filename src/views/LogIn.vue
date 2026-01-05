@@ -98,7 +98,7 @@ export default {
   watch: {
     isUserAuthenticated(value) {
       if (value === true) {
-        this.$router.push({ path: '/Bookshelf-app/' });
+        this.$router.push({ path: '/' });
       }
     },
   },
