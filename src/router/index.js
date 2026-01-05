@@ -1,16 +1,16 @@
 import { createRouter, createWebHistory } from 'vue-router';
 
-import Store from '@/store';
+import Store from '../store';
 
-import BooksListVue from '@/views/BooksList.vue';
-import BookDetailVue from '@/views/BookDetail.vue';
-import WishListBooksVue from '@/views/WishListBooks.vue';
-import ReadBooksVue from '@/views/ReadBooks.vue';
-import UserProfileVue from '@/views/UserProfile.vue';
-import LogInVue from '@/views/LogIn.vue';
-import SignInVue from '@/views/SignIn.vue';
+import BooksListVue from '../views/BooksList.vue';
+import BookDetailVue from '../views/BookDetail.vue';
+import WishListBooksVue from '../views/WishListBooks.vue';
+import ReadBooksVue from '../views/ReadBooks.vue';
+import UserProfileVue from '../views/UserProfile.vue';
+import LogInVue from '../views/LogIn.vue';
+import SignInVue from '../views/SignIn.vue';
 
-import HomeView from '@/views/Home.vue';
+import HomeView from '../views/Home.vue';
 
 function AuthGuard(from, to, next) {
   if (Store.getters.getIsUserAuthenticated) {
