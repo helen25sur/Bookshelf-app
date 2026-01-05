@@ -4,7 +4,7 @@ const path = require('path');
 module.exports = defineConfig({
   transpileDependencies: true,
   // Якщо ваш проєкт лежить у підпапці (як Bookshelf-app на GitHub), розкоментуйте рядок нижче:
-  publicPath: process.env.NODE_ENV === 'production' ? '/Bookshelf-app/' : '/',
+  publicPath: '/',
 
   configureWebpack: {
     resolve: {
