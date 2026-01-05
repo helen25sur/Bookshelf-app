@@ -92,14 +92,14 @@ export default {
     },
     buttons() {
       return this.isUserAuthenticated ? [
-        { icon: 'mdi-bookshelf', title: 'Books', route: '/Bookshelf-app/books' },
-        { icon: 'mdi-list-box', title: 'Wishlist', route: '/Bookshelf-app/wishlist' },
-        { icon: 'mdi-book-variant', title: 'Read Books', route: '/Bookshelf-app/read' },
-        { icon: 'mdi-account-box', title: 'Profile', route: '/Bookshelf-app/profile' },
+        { icon: 'mdi-bookshelf', title: 'Books', route: '/books' },
+        { icon: 'mdi-list-box', title: 'Wishlist', route: '/wishlist' },
+        { icon: 'mdi-book-variant', title: 'Read Books', route: '/read' },
+        { icon: 'mdi-account-box', title: 'Profile', route: '/profile' },
       ] : [
-        { icon: 'mdi-bookshelf', title: 'Books', route: '/Bookshelf-app/books' },
-        { icon: 'mdi-login-variant', title: 'Log In', route: '/Bookshelf-app/login' },
-        { icon: 'mdi-login', title: 'Sign In', route: '/Bookshelf-app/signin' },
+        { icon: 'mdi-bookshelf', title: 'Books', route: '/books' },
+        { icon: 'mdi-login-variant', title: 'Log In', route: '/login' },
+        { icon: 'mdi-login', title: 'Sign In', route: '/signin' },
       ];
     },
   },
