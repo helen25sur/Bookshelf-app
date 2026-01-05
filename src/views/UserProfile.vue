@@ -53,8 +53,8 @@
 </template>
 
 <script>
-import LoaderComponent from '@/components/LoaderComponent.vue';
-import { auth } from '@/config/firebase';
+import LoaderComponent from '../components/LoaderComponent.vue';
+import { auth } from '../config/firebase';
 
 export default {
   components: {

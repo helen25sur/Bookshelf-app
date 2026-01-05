@@ -34,8 +34,8 @@
 </template>
 
 <script>
-import BooksService from '@/services/books-service';
-import LoaderComponent from '@/components/LoaderComponent.vue';
+import BooksService from '../services/books-service';
+import LoaderComponent from '../components/LoaderComponent.vue';
 
 const booksService = new BooksService();
 export default {

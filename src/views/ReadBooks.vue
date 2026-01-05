@@ -70,7 +70,7 @@
 </template>
 
 <script>
-import LoaderComponent from '@/components/LoaderComponent.vue';
+import LoaderComponent from '../components/LoaderComponent.vue';
 
 export default {
   components: {
