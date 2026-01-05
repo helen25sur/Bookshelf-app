@@ -17,52 +17,52 @@ function AuthGuard(from, to, next) {
   if (Store.getters.getIsUserAuthenticated) {
     next();
   } else {
-    next('/Bookshelf-app/signin');
+    next('/signin');
   }
 }
 
 const routes = [
   {
-    path: '/Bookshelf-app/',
+    path: '/',
     name: 'home',
     component: HomeView,
   },
   {
-    path: '/Bookshelf-app/books',
+    path: '/books',
     name: 'books',
     component: BooksListVue,
   },
   {
-    path: '/Bookshelf-app/books/:id',
+    path: '/books/:id',
     name: 'book',
     props: true,
     component: BookDetailVue,
   },
   {
-    path: '/Bookshelf-app/wishlist',
+    path: '/wishlist',
     name: 'wishlist',
     component: WishListBooksVue,
     beforeEnter: AuthGuard,
   },
   {
-    path: '/Bookshelf-app/read',
+    path: '/read',
     name: 'read',
     component: ReadBooksVue,
     beforeEnter: AuthGuard,
   },
   {
-    path: '/Bookshelf-app/profile',
+    path: '/profile',
     name: 'profile',
     component: UserProfileVue,
     beforeEnter: AuthGuard,
   },
   {
-    path: '/Bookshelf-app/login',
+    path: '/login',
     name: 'login',
     component: LogInVue,
   },
   {
-    path: '/Bookshelf-app/signin',
+    path: '/signin',
     name: 'signin',
     component: SignInVue,
   },
